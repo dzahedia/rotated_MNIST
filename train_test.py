@@ -1,7 +1,6 @@
 '''Trains a shallow CNN on a rotated MNIST dataset.
 
-Achieves 99.48% test accuracy after 21 epochs
-in less than 2 hours with a CORE i7 CPU machine (no GPU)
+Achieves 99.48% test accuracy after 21 epochs in less than 2 hours with a CORE i7 CPU machine (no GPU).
 '''
 
 from __future__ import print_function
