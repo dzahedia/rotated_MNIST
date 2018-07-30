@@ -1,12 +1,12 @@
 '''Trains a shallow CNN on a rotated MNIST dataset.
 
-Achieves 99.48% test accuracy after 21 epochs in less than 2 hours with a CORE i7 CPU machine (no GPU).
+Achieves 99.48 % test accuracy after 21 epochs in less than 1 hour with a CORE i7 CPU machine (no GPU).
 '''
 
 
 import keras
 from keras.datasets import mnist
-from keras.models import Sequential
+from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras.callbacks import  ModelCheckpoint
@@ -37,10 +37,10 @@ if rotate:
     rotatedy = []
     for dig, lab in zip(x_train,y_train):
         img = cv2.copyMakeBorder(dig, 10, 10, 10, 10, borderType, None, value)
-        rotated = imutils.rotate_bound(img, 10)
+        rotated = imutils.rotate_bound(img, 15)
         rotatedx.append(rotated[15:43,15:43])
         rotatedy.append(lab)
-        rotated = imutils.rotate_bound(img, 350)
+        rotated = imutils.rotate_bound(img, 345)
         rotatedx.append(rotated[15:43,15:43])
         rotatedy.append(lab)
     x_rot = np.array(rotatedx)
@@ -75,10 +75,10 @@ model = Sequential()
 model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
                  input_shape=input_shape))
-model.add(Conv2D(64, (2, 2), activation='relu'))
+model.add(Conv2D(32, (2, 2), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
-model.add(Conv2D(64, (2, 2), activation='relu'))
+model.add(Conv2D(32, (2, 2), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
 model.add(Flatten())
@@ -103,6 +103,7 @@ model.fit(x_train, y_train,
           )
 
 def model_error_rate():
+    model = load_model(filepath)
     err = []
     p = model.predict(x_test.reshape(10000, 28, 28, 1))
     yhat = np.argmax(p, axis=1)
