@@ -102,6 +102,7 @@ model.fit(x_train, y_train,
 
 # model evaluate uses the last saved model the following function uses the last model
 def model_error_rate():
+    err = []
     p = model.predict(x_test.reshape(10000,28,28,1))
     yhat = np.argmax(p,axis = 1)
     for i in range(10000):
