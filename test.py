@@ -1,14 +1,10 @@
-from __future__ import print_function
+
 from keras.datasets import mnist
 from keras.models import  load_model
 
-
-from datetime import datetime
 import numpy as np
 
-import cv2
-borderType = cv2.BORDER_CONSTANT
-start = datetime.now()
+
 
 
 # the data, split between train and test sets
